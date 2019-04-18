@@ -16,9 +16,9 @@ import bezier as bez
 from optimization import BezOptimization
 
 SAFE_DIST = 1
-NUM_RUNS = 100
-PLOT = True
-SAVE_NAME = '2d_5deg_5veh_2obs_euclidean.csv'
+NUM_RUNS = 100000
+PLOT = False
+SAVE_NAME = '2d_5deg_5veh_2obs_euclidean_10.csv'
 
 
 def animateTrajectory(trajectories):
