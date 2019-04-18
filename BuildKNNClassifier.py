@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+
+"""
+
+import os
+
+import numpy as np
+import pandas as pd
+from sklearn import model_selection, preprocessing
+from sklearn.neighbors import KNeighborsRegressor
+
+DATA_FNAME = '2d_5deg_5veh_2obs_euclidean'
+X_HEADERS = ['x0_i',
+             'y0_i',
+             'x1_i',
+             'y1_i',
+             'x2_i',
+             'y2_i',
+             'x3_i',
+             'y3_i',
+             'x4_i',
+             'y4_i',
+             'x0_f',
+             'y0_f',
+             'x1_f',
+             'y1_f',
+             'x2_f',
+             'y2_f',
+             'x3_f',
+             'y3_f',
+             'x4_f',
+             'y4_f',
+             'obs0x',
+             'obs0y',
+             'obs1x',
+             'obs1y']
+
+
+if __name__ == '__main__':
+    # Import the data
+    fnames = [i for i in os.listdir() if DATA_FNAME in i]
+    print('[+] Importing Data...')
+    temp = []
+    for name in fnames:
+        print('  [-] importing ' + name)
+        df = pd.read_csv(name)
+        temp.append(df)
+
+    data = pd.concat(temp, ignore_index=True)
+    print('Imported Data:')
+    print(data.head())
+
+    # Properly organize the data
+    X = data[X_HEADERS]
+    y = data.drop(X_HEADERS, axis=1)
+    print('X Data:')
+    print(X.head())
+    print('Y Data:')
+    print(y.head())
+
+    X = np.array(X)
+    y = np.array(y)
+
+    X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.2)
+
+    # Train the regressor
+    reg = KNeighborsRegressor(n_neighbors=5, n_jobs=-1)
+    print('Fitting...')
+    reg.fit(X_train, y_train)
+
+    acc = reg.score(X_test, y_test)
+    print('Accuracy: {:0.2f}%'.format(acc*100))
