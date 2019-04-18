@@ -7,11 +7,13 @@
 import os
 
 import numpy as np
+import pickle
 import pandas as pd
 from sklearn import model_selection, preprocessing
 from sklearn.neighbors import KNeighborsRegressor
 
 DATA_FNAME = '2d_5deg_5veh_2obs_euclidean'
+PICKLE_NAME = 'regressor'
 X_HEADERS = ['x0_i',
              'y0_i',
              'x1_i',
@@ -49,15 +51,15 @@ if __name__ == '__main__':
         temp.append(df)
 
     data = pd.concat(temp, ignore_index=True)
-    print('Imported Data:')
+    print('[+] Imported Data:')
     print(data.head())
 
     # Properly organize the data
     X = data[X_HEADERS]
     y = data.drop(X_HEADERS, axis=1)
-    print('X Data:')
+    print('[+] X Data:')
     print(X.head())
-    print('Y Data:')
+    print('[+] Y Data:')
     print(y.head())
 
     X = np.array(X)
@@ -67,8 +69,20 @@ if __name__ == '__main__':
 
     # Train the regressor
     reg = KNeighborsRegressor(n_neighbors=5, n_jobs=-1)
-    print('Fitting...')
+    print('[+] Fitting...')
     reg.fit(X_train, y_train)
+    print('  [-] Fit complete')
 
+    print('[+] Scoring...')
     acc = reg.score(X_test, y_test)
-    print('Accuracy: {:0.2f}%'.format(acc*100))
+    print('  [-] R^2 Score: {:0.2f}'.format(acc))
+
+    # Increment the number of the file name and save the regressor as a pickle
+    print('[+] Saving regressor object...')
+    i = 0
+    while os.path.exists(PICKLE_NAME + '_' + str(i) + '.pickle'):
+        i += 1
+    with open(PICKLE_NAME + '_' + str(i) + '.pickle', 'wb') as f:
+        pickle.dump(reg, f)
+
+    print('[!] Done')
