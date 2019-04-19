@@ -68,7 +68,7 @@ if __name__ == '__main__':
     X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.2)
 
     # Train the regressor
-    reg = KNeighborsRegressor(n_neighbors=5, n_jobs=-1)
+    reg = KNeighborsRegressor(n_neighbors=5, n_jobs=-1, weights='uniform')
     print('[+] Fitting...')
     reg.fit(X_train, y_train)
     print('  [-] Fit complete')
