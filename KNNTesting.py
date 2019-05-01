@@ -18,7 +18,7 @@ import bezier as bez
 from optimization import BezOptimization
 
 SAFE_DIST = 1
-REG_PATH = '/home/ckielasjensen/MLTrajectoryGeneration/regressor_distance_k3_0.pickle'
+REG_PATH = '/home/ckielasjensen/MLTrajectoryGeneration/regressor_distance_k5_0.pickle'
 
 
 def generate_random_state(xmin, xmax, ymin, ymax, numPts):
