@@ -65,7 +65,7 @@ def import_data(directory='.', data_fname='2d_5deg_5veh_2obs_euclidean'):
     X = np.array(X)
     y = np.array(y)
 
-    return model_selection.train_test_split(X, y, test_size=0.2)
+    return X, y
 
 
 if __name__ == '__main__':
@@ -95,7 +95,10 @@ if __name__ == '__main__':
 #
 #    X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.2)
 
-    X_train, X_test, y_train, y_test = import_data('data')
+     = import_data('data')
+    X, y = import('data')
+    X_train, X_test_val, y_train, y_test_val = model_selection.train_test_split(X, y, test_size=0.2)
+    X_test, X_validation, y_test, y_validation = model_selection.train_test_split(X_test_val, y_test_val, test_size=0.5)
     # Train the regressor
     reg = KNeighborsRegressor(n_neighbors=5, n_jobs=-1, weights='distance')
     print('[+] Fitting...')
