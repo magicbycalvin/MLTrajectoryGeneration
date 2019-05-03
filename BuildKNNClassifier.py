@@ -95,7 +95,6 @@ if __name__ == '__main__':
 #
 #    X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.2)
 
-     = import_data('data')
     X, y = import('data')
     X_train, X_test_val, y_train, y_test_val = model_selection.train_test_split(X, y, test_size=0.2)
     X_test, X_validation, y_test, y_validation = model_selection.train_test_split(X_test_val, y_test_val, test_size=0.5)
